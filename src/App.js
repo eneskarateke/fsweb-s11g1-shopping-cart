@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { data } from "./data";
 
@@ -14,6 +14,17 @@ import ShoppingCart from "./components/ShoppingCart";
 function App() {
   const [products, setProducts] = useState(data);
   const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addItem = (item) => {
     // verilen itemi sepete ekleyin
