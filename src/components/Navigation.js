@@ -6,13 +6,13 @@ import { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
 
 const Navigation = () => {
-  const sepet = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   return (
     <ScNav>
       <nav className="content">
         <NavLink to="/">Products</NavLink>
         <NavLink to="/cart">
-          Cart <span>{sepet.length}</span>
+          Cart <span>{cart.length}</span>
         </NavLink>
       </nav>
     </ScNav>

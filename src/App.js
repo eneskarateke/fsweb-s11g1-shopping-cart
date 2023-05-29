@@ -32,36 +32,36 @@ function App() {
     setCart([...cart, item]);
   };
 
+  // const removeItem = (id) => {
+  //   setCart(cart.filter((item) => item.id !== id));
+  // };
   const removeItem = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
+    const newCart = [...cart];
+    const indexToRemove = newCart.findIndex((item) => item.id === id);
+
+    newCart.splice(indexToRemove, 1);
+
+    setCart(newCart);
   };
 
   return (
     <div className="App">
-      <CartContext.Provider value={cart}>
+      <CartContext.Provider value={{ cart, removeItem }}>
         <ProductContext.Provider value={{ products, addItem }}>
           <Navigation />
+
+          {/* Routelar */}
+          <main className="content">
+            <Route exact path="/">
+              <Products />
+            </Route>
+
+            <Route path="/cart">
+              <ShoppingCart />
+            </Route>
+          </main>
         </ProductContext.Provider>
       </CartContext.Provider>
-
-      {/* Routelar */}
-      <main className="content">
-        <Route exact path="/">
-          <CartContext.Provider value={cart}>
-            <ProductContext.Provider value={{ products, addItem }}>
-              <Products />
-            </ProductContext.Provider>
-          </CartContext.Provider>
-        </Route>
-
-        <Route path="/cart">
-          <CartContext.Provider value={{ cart, removeItem }}>
-            <ProductContext.Provider value={{ products, addItem }}>
-              <ShoppingCart />
-            </ProductContext.Provider>
-          </CartContext.Provider>
-        </Route>
-      </main>
     </div>
   );
 }
